@@ -38,6 +38,11 @@ public class StudentRegistrationFormPage {
     $("#userNumber").setValue(userNumber);
   }
 
+  public void setSubject(String subject) {
+    $("#subjectsInput").val(subject);
+    $(".subjects-auto-complete__menu-list").$(byText(subject)).click();
+  }
+
   public void setBirthDate(String year, String month, String day) {
     $("#dateOfBirthInput").click();
     $(".react-datepicker__month-select").$(byText(month)).click();

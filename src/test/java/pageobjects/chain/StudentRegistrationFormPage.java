@@ -30,7 +30,8 @@ public class StudentRegistrationFormPage {
     $(".react-datepicker__year-select").$(byText(testDate.getYearOfBirth())).click();
     $(".react-datepicker__month").$(byText(testDate.getDateOfBirth())).click();
 
-    //$("#subjectsInput").setValue(subject); //todo: поле не сохраняется
+    $("#subjectsInput").val(testDate.getSubject());
+    $(".subjects-auto-complete__menu-list").$(byText(testDate.getSubject())).click();
     $("#hobbiesWrapper .col-md-9.col-sm-12 [for=hobbies-checkbox-3]").shouldHave(
         text(testDate.getHobby()))
                                                                      .click();

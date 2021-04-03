@@ -17,7 +17,7 @@ public class UserDefaultData {
   private final String hobby = "Music";
   private final String state = "Haryana";
   private final String city = "Panipat";
-  private final String subject = ""; //todo: поле не сохраняется
+  private final String subject = "Chemistry";
   private final String currentAddress = "my current address";
   private final String fileName = "art.jpg";
   private final File file = new File("src/test/resources/" + fileName);
