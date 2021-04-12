@@ -25,12 +25,10 @@ public class StudentRegistrationFormWithFakerTest {
   @Test
   void successfulFillTest() {
     Faker faker = new Faker();
-
-    open("https://demoqa.com/automation-practice-form");
     String firstName = faker.name().firstName();
     String lastName = faker.name().lastName();
     String userEmail = faker.internet().emailAddress();
-    String userNumber = faker.phoneNumber().cellPhone();
+    String userNumber = faker.number().digits(10);
     String dateOfBirth = "17";
     String monthOfBirth = "May";
     String yearOfBirth = "2000";
@@ -53,10 +51,11 @@ public class StudentRegistrationFormWithFakerTest {
     enteredData.put("Address", currentAddress);
     enteredData.put("State and City", state + " " + city);
 
+    open("https://demoqa.com/automation-practice-form");
     $("#firstName").setValue(firstName);
     $("#lastName").setValue(lastName);
     $("#userEmail").setValue(userEmail);
-    $("#genterWrapper .col-md-9.col-sm-12 [for=gender-radio-3]").shouldHave(text(gender)).click();
+    $("#genterWrapper [for=gender-radio-3]").shouldHave(text(gender)).click();
     $("#userNumber").setValue(userNumber);
 
     $("#dateOfBirthInput").click();
@@ -66,8 +65,7 @@ public class StudentRegistrationFormWithFakerTest {
 
     $("#subjectsInput").val(subject);
     $(".subjects-auto-complete__menu-list").$(byText(subject)).click();
-    $("#hobbiesWrapper .col-md-9.col-sm-12 [for=hobbies-checkbox-3]").shouldHave(text(hobby))
-                                                                     .click();
+    $("#hobbiesWrapper [for=hobbies-checkbox-3]").shouldHave(text(hobby)).click();
     $("#uploadPicture").uploadFromClasspath(fileName);
     $("#currentAddress").setValue(currentAddress);
     $("#stateCity-wrapper #state").click();

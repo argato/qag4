@@ -21,7 +21,7 @@ public class StudentRegistrationFormTest {
     studentRegistrationFormPage.setLastName(testDate.getLastName());
     studentRegistrationFormPage.setUserEmail(testDate.getUserEmail());
     studentRegistrationFormPage.setUserNumber(testDate.getUserNumber());
-    studentRegistrationFormPage.setGenter(testDate.getGender());
+    studentRegistrationFormPage.setGender(testDate.getGender());
     studentRegistrationFormPage.setSubject(testDate.getSubject());
     studentRegistrationFormPage.setBirthDate(testDate.getYearOfBirth(), testDate.getMonthOfBirth(),
                                              testDate.getDateOfBirth());

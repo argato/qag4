@@ -8,78 +8,100 @@ import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.open;
 
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
 import java.io.File;
 import java.util.Map;
 
 public class StudentRegistrationFormPage {
+
+  private final SelenideElement
+      firstNameInput = $("#firstName"),
+      lastNameInput = $("#lastName"),
+      userEmailInput = $("#userEmail"),
+      genderGroup = $("#genterWrapper [for=gender-radio-3]"),
+      userNumberInput = $("#userNumber"),
+      subjectsInput = $("#subjectsInput"),
+      subjectsList = $(".subjects-auto-complete__menu-list"),
+      dateOfBirthInput = $("#dateOfBirthInput"),
+      monthOfBirthList = $(".react-datepicker__month-select"),
+      yearOfBirthList = $(".react-datepicker__year-select"),
+      dateOfBirth = $(".react-datepicker__month"),
+      hobbyInput = $("#hobbiesWrapper [for=hobbies-checkbox-3]"),
+      pictureInput = $("#uploadPicture"),
+      currentAddressTextArea = $("#currentAddress"),
+      stateInput = $("#stateCity-wrapper #state"),
+      stateList = $("#stateCity-wrapper #state .css-26l3qy-menu"),
+      cityInput = $("#stateCity-wrapper #city"),
+      cityList = $("#stateCity-wrapper #city .css-26l3qy-menu"),
+      submitButton = $("#submit");
+  private final ElementsCollection
+      resultGrid = $$(".modal-content tbody tr");
+
 
   public void openPage() {
     open("https://demoqa.com/automation-practice-form");
   }
 
   public void setFirstName(String firstName) {
-    $("#firstName").setValue(firstName);
+    firstNameInput.setValue(firstName);
   }
 
   public void setLastName(String lastName) {
-    $("#lastName").setValue(lastName);
+    lastNameInput.setValue(lastName);
   }
 
   public void setUserEmail(String userEmail) {
-    $("#userEmail").setValue(userEmail);
+    userEmailInput.setValue(userEmail);
   }
 
-  public void setGenter(String genter) {
-    $("#genterWrapper .col-md-9.col-sm-12 [for=gender-radio-3]").shouldHave(
-        text(genter)).click();
+  public void setGender(String gender) {
+    genderGroup.shouldHave(text(gender)).click();
   }
 
   public void setUserNumber(String userNumber) {
-    $("#userNumber").setValue(userNumber);
+    userNumberInput.setValue(userNumber);
   }
 
   public void setSubject(String subject) {
-    $("#subjectsInput").val(subject);
-    $(".subjects-auto-complete__menu-list").$(byText(subject)).click();
+    subjectsInput.val(subject);
+    subjectsList.$(byText(subject)).click();
   }
 
   public void setBirthDate(String year, String month, String day) {
-    $("#dateOfBirthInput").click();
-    $(".react-datepicker__month-select").$(byText(month)).click();
-    $(".react-datepicker__year-select").$(byText(year)).click();
-    $(".react-datepicker__month").$(byText(day)).click();
+    dateOfBirthInput.click();
+    monthOfBirthList.$(byText(month)).click();
+    yearOfBirthList.$(byText(year)).click();
+    dateOfBirth.$(byText(day)).click();
   }
 
   public void setHobby(String hobby) {
-    $("#hobbiesWrapper .col-md-9.col-sm-12 [for=hobbies-checkbox-3]").shouldHave(
-        text(hobby)).click();
+    hobbyInput.shouldHave(text(hobby)).click();
   }
 
   public void setFile(File file) {
-    $("#uploadPicture").uploadFile(file);
+    pictureInput.uploadFile(file);
   }
 
   public void setCurrentAddress(String currentAddress) {
-    $("#currentAddress").setValue(currentAddress);
+    currentAddressTextArea.setValue(currentAddress);
   }
 
   public void setState(String state) {
-    $("#stateCity-wrapper #state").click();
-    $("#stateCity-wrapper #state .css-26l3qy-menu").$(byText(state)).click();
+    stateInput.click();
+    stateList.$(byText(state)).click();
   }
 
   public void setCity(String city) {
-    $("#stateCity-wrapper #city").click();
-    $("#stateCity-wrapper #city .css-26l3qy-menu").$(byText(city)).click();
+    cityInput.click();
+    cityList.$(byText(city)).click();
   }
 
   public void submitForm() {
-    $("#submit").click();
+    submitButton.click();
   }
 
   public void checkData(Map<String, String> enteredData) {
-    ElementsCollection rows = $$(".modal-content tbody tr");
-    rows.forEach(row -> {
+    resultGrid.forEach(row -> {
       ElementsCollection tds = row.$$("td");
       tds.get(1).shouldHave(exactText(enteredData.get(tds.get(0).text())));
     });
