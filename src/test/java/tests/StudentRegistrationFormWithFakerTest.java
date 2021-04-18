@@ -1,14 +1,12 @@
 package tests;
 
 import static com.codeborne.selenide.Condition.exactText;
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.open;
 
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.ElementsCollection;
 import com.github.javafaker.Faker;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,23 +37,24 @@ public class StudentRegistrationFormWithFakerTest {
     String subject = "Chemistry";
     String currentAddress = faker.address().fullAddress();
     String fileName = "art.jpg";
-    Map<String, String> enteredData = new HashMap<>();
-    enteredData.put("Student Name", firstName + " " + lastName);
-    enteredData.put("Student Email", userEmail);
-    enteredData.put("Gender", gender);
-    enteredData.put("Mobile", userNumber);
-    enteredData.put("Date of Birth", dateOfBirth + " " + monthOfBirth + "," + yearOfBirth);
-    enteredData.put("Subjects", subject);
-    enteredData.put("Hobbies", hobby);
-    enteredData.put("Picture", fileName);
-    enteredData.put("Address", currentAddress);
-    enteredData.put("State and City", state + " " + city);
+
+    Map<String, String> expectedData = new HashMap<>();
+    expectedData.put("Student Name", firstName + " " + lastName);
+    expectedData.put("Student Email", userEmail);
+    expectedData.put("Gender", gender);
+    expectedData.put("Mobile", userNumber);
+    expectedData.put("Date of Birth", dateOfBirth + " " + monthOfBirth + "," + yearOfBirth);
+    expectedData.put("Subjects", subject);
+    expectedData.put("Hobbies", hobby);
+    expectedData.put("Picture", fileName);
+    expectedData.put("Address", currentAddress);
+    expectedData.put("State and City", state + " " + city);
 
     open("https://demoqa.com/automation-practice-form");
     $("#firstName").setValue(firstName);
     $("#lastName").setValue(lastName);
     $("#userEmail").setValue(userEmail);
-    $("#genterWrapper [for=gender-radio-3]").shouldHave(text(gender)).click();
+    $("#genterWrapper [for=gender-radio-3]").click();
     $("#userNumber").setValue(userNumber);
 
     $("#dateOfBirthInput").click();
@@ -65,18 +64,19 @@ public class StudentRegistrationFormWithFakerTest {
 
     $("#subjectsInput").val(subject);
     $(".subjects-auto-complete__menu-list").$(byText(subject)).click();
-    $("#hobbiesWrapper [for=hobbies-checkbox-3]").shouldHave(text(hobby)).click();
+    $("#hobbiesWrapper [for=hobbies-checkbox-3]").click();
     $("#uploadPicture").uploadFromClasspath(fileName);
     $("#currentAddress").setValue(currentAddress);
     $("#stateCity-wrapper #state").click();
-    $("#stateCity-wrapper #state .css-26l3qy-menu").$(byText(state)).click();
+    $("#stateCity-wrapper #state").$(byText(state)).click();
     $("#stateCity-wrapper #city").click();
-    $("#stateCity-wrapper #city .css-26l3qy-menu").$(byText(city)).click();
+    $("#stateCity-wrapper #city").$(byText(city)).click();
     $("#submit").click();
-    ElementsCollection rows = $$(".modal-content tbody tr");
-    rows.forEach(row -> {
-      ElementsCollection tds = row.$$("td");
-      tds.get(1).shouldHave(exactText(enteredData.get(tds.get(0).text())));
+
+    $$(".modal-content tbody tr").snapshot().forEach(row -> {
+      String rowLabel = row.$("td").text();
+      String expectedText = expectedData.get(rowLabel);
+      row.$("td", 1).shouldHave(exactText(expectedText));
     });
   }
 }

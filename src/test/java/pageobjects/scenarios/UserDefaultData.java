@@ -79,19 +79,17 @@ public class UserDefaultData {
   }
 
   public Map<String, String> getEnteredDate() {
-    Map<String, String> enteredData = new HashMap<>();
-    enteredData.put("Student Name", firstName + " " + lastName);
-    enteredData.put("Student Email", userEmail);
-    enteredData.put("Gender", gender);
-    enteredData.put("Mobile", userNumber);
-    enteredData.put("Date of Birth", dateOfBirth + " " + monthOfBirth + "," + yearOfBirth);
-    enteredData.put("Subjects", subject);
-    enteredData.put("Hobbies", hobby);
-    enteredData.put("Picture", fileName);
-    enteredData.put("Address", currentAddress);
-    enteredData.put("State and City", state + " " + city);
-    return enteredData;
+    Map<String, String> expectedData = new HashMap<>();
+    expectedData.put("Student Name", firstName + " " + lastName);
+    expectedData.put("Student Email", userEmail);
+    expectedData.put("Gender", gender);
+    expectedData.put("Mobile", userNumber);
+    expectedData.put("Date of Birth", dateOfBirth + " " + monthOfBirth + "," + yearOfBirth);
+    expectedData.put("Subjects", subject);
+    expectedData.put("Hobbies", hobby);
+    expectedData.put("Picture", fileName);
+    expectedData.put("Address", currentAddress);
+    expectedData.put("State and City", state + " " + city);
+    return expectedData;
   }
-
-
 }

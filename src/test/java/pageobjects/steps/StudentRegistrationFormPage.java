@@ -1,7 +1,6 @@
 package pageobjects.steps;
 
 import static com.codeborne.selenide.Condition.exactText;
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -21,7 +20,6 @@ public class StudentRegistrationFormPage {
       genderGroup = $("#genterWrapper [for=gender-radio-3]"),
       userNumberInput = $("#userNumber"),
       subjectsInput = $("#subjectsInput"),
-      subjectsList = $(".subjects-auto-complete__menu-list"),
       dateOfBirthInput = $("#dateOfBirthInput"),
       monthOfBirthList = $(".react-datepicker__month-select"),
       yearOfBirthList = $(".react-datepicker__year-select"),
@@ -30,9 +28,9 @@ public class StudentRegistrationFormPage {
       pictureInput = $("#uploadPicture"),
       currentAddressTextArea = $("#currentAddress"),
       stateInput = $("#stateCity-wrapper #state"),
-      stateList = $("#stateCity-wrapper #state .css-26l3qy-menu"),
+      stateList = $("#stateCity-wrapper #state"),
       cityInput = $("#stateCity-wrapper #city"),
-      cityList = $("#stateCity-wrapper #city .css-26l3qy-menu"),
+      cityList = $("#stateCity-wrapper #city"),
       submitButton = $("#submit");
   private final ElementsCollection
       resultGrid = $$(".modal-content tbody tr");
@@ -54,8 +52,8 @@ public class StudentRegistrationFormPage {
     userEmailInput.setValue(userEmail);
   }
 
-  public void setGender(String gender) {
-    genderGroup.shouldHave(text(gender)).click();
+  public void setGender() {
+    genderGroup.click();
   }
 
   public void setUserNumber(String userNumber) {
@@ -63,8 +61,7 @@ public class StudentRegistrationFormPage {
   }
 
   public void setSubject(String subject) {
-    subjectsInput.val(subject);
-    subjectsList.$(byText(subject)).click();
+    subjectsInput.val(subject).pressEnter();
   }
 
   public void setBirthDate(String year, String month, String day) {
@@ -74,8 +71,8 @@ public class StudentRegistrationFormPage {
     dateOfBirth.$(byText(day)).click();
   }
 
-  public void setHobby(String hobby) {
-    hobbyInput.shouldHave(text(hobby)).click();
+  public void setHobby() {
+    hobbyInput.click();
   }
 
   public void setFile(File file) {
@@ -101,10 +98,10 @@ public class StudentRegistrationFormPage {
   }
 
   public void checkData(Map<String, String> enteredData) {
-    resultGrid.forEach(row -> {
-      ElementsCollection tds = row.$$("td");
-      tds.get(1).shouldHave(exactText(enteredData.get(tds.get(0).text())));
+    resultGrid.snapshot().forEach(row -> {
+      String rowLabel = row.$("td").text();
+      String expectedText = enteredData.get(rowLabel);
+      row.$("td", 1).shouldHave(exactText(expectedText));
     });
   }
-
 }

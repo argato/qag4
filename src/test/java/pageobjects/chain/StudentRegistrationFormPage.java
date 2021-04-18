@@ -1,13 +1,11 @@
 package pageobjects.chain;
 
 import static com.codeborne.selenide.Condition.exactText;
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.open;
 
-import com.codeborne.selenide.ElementsCollection;
 import java.util.Map;
 
 public class StudentRegistrationFormPage {
@@ -21,8 +19,7 @@ public class StudentRegistrationFormPage {
     $("#firstName").setValue(testDate.getFirstName());
     $("#lastName").setValue(testDate.getLastName());
     $("#userEmail").setValue(testDate.getUserEmail());
-    $("#genterWrapper .col-md-9.col-sm-12 [for=gender-radio-3]").shouldHave(
-        text(testDate.getGender())).click();
+    $("#genterWrapper [for=gender-radio-3]").click();
     $("#userNumber").setValue(testDate.getUserNumber());
 
     $("#dateOfBirthInput").click();
@@ -30,29 +27,25 @@ public class StudentRegistrationFormPage {
     $(".react-datepicker__year-select").$(byText(testDate.getYearOfBirth())).click();
     $(".react-datepicker__month").$(byText(testDate.getDateOfBirth())).click();
 
-    $("#subjectsInput").val(testDate.getSubject());
-    $(".subjects-auto-complete__menu-list").$(byText(testDate.getSubject())).click();
-    $("#hobbiesWrapper .col-md-9.col-sm-12 [for=hobbies-checkbox-3]").shouldHave(
-        text(testDate.getHobby()))
-                                                                     .click();
+    $("#subjectsInput").val(testDate.getSubject()).pressEnter();
+    $("#hobbiesWrapper [for=hobbies-checkbox-3]").click();
     $("#uploadPicture").uploadFile(testDate.getFile());
     $("#currentAddress").setValue(testDate.getCurrentAddress());
     $("#stateCity-wrapper #state").click();
-    $("#stateCity-wrapper #state .css-26l3qy-menu").$(byText(testDate.getState())).click();
+    $("#stateCity-wrapper #state").$(byText(testDate.getState())).click();
     $("#stateCity-wrapper #city").click();
-    $("#stateCity-wrapper #city .css-26l3qy-menu").$(byText(testDate.getCity())).click();
+    $("#stateCity-wrapper #city").$(byText(testDate.getCity())).click();
 
     $("#submit").click();
     return this;
   }
 
   public StudentRegistrationFormPage checkData(Map<String, String> enteredData) {
-    ElementsCollection rows = $$(".modal-content tbody tr");
-    rows.forEach(row -> {
-      ElementsCollection tds = row.$$("td");
-      tds.get(1).shouldHave(exactText(enteredData.get(tds.get(0).text())));
+    $$(".modal-content tbody tr").snapshot().forEach(row -> {
+      String rowLabel = row.$("td").text();
+      String expectedText = enteredData.get(rowLabel);
+      row.$("td", 1).shouldHave(exactText(expectedText));
     });
     return this;
   }
-
 }

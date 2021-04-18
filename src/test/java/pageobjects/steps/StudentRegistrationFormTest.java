@@ -21,11 +21,11 @@ public class StudentRegistrationFormTest {
     studentRegistrationFormPage.setLastName(testDate.getLastName());
     studentRegistrationFormPage.setUserEmail(testDate.getUserEmail());
     studentRegistrationFormPage.setUserNumber(testDate.getUserNumber());
-    studentRegistrationFormPage.setGender(testDate.getGender());
+    studentRegistrationFormPage.setGender();
     studentRegistrationFormPage.setSubject(testDate.getSubject());
     studentRegistrationFormPage.setBirthDate(testDate.getYearOfBirth(), testDate.getMonthOfBirth(),
                                              testDate.getDateOfBirth());
-    studentRegistrationFormPage.setHobby(testDate.getHobby());
+    studentRegistrationFormPage.setHobby();
     studentRegistrationFormPage.setCurrentAddress(testDate.getCurrentAddress());
     studentRegistrationFormPage.setState(testDate.getState());
     studentRegistrationFormPage.setCity(testDate.getCity());
@@ -33,7 +33,5 @@ public class StudentRegistrationFormTest {
 
     studentRegistrationFormPage.submitForm();
     studentRegistrationFormPage.checkData(testDate.getEnteredDate());
-
-
   }
 }

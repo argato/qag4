@@ -19,7 +19,5 @@ public class StudentRegistrationFormTest {
     studentRegistrationFormPage.openPage();
     studentRegistrationFormPage.fillForm(testDate);
     studentRegistrationFormPage.checkData(testDate.getEnteredDate());
-
-
   }
 }
